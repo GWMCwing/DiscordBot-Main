@@ -1,4 +1,5 @@
 import discord
+
 async def getid(message, argument):
 	if len(argument) == 0:
 		await message.channel.send("Missing Argument [guild/channel]")
@@ -112,3 +113,29 @@ async def autoAddRoleMessage(message, PREFIX):
 	# add user and guild and channel to the dict => 
 	# choose channel to be sent
 	# send message to confirm
+
+# remove add role to prevent afk timeout??
+async def preventAFK(message,roleName):
+	target = message.author
+	guild = message.guild
+	tempBoolean = False
+	for guildRole in guild.roles:
+		if guildRole.name == roleName:
+			tempBoolean = True
+			tempBoolean2 = False
+			for targetRole in target.roles:
+				if targetRole.name == roleName: 
+					tempBoolean2 = True
+					await target.remove_roles(targetRole)
+			if not tempBoolean2:
+				await target.add_roles(guildRole)
+	if not tempBoolean:
+		AFKrole = await guild.create_role(name = roleName)
+		roleLength = len(guild.roles)
+		positions = {AFKrole: roleLength - 1 }
+		await AFKrole.edit_role_positions(positions)
+		target.add_roles(AFKrole)
+
+
+
+		
