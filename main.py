@@ -133,6 +133,9 @@ async def runCommand(client,PREFIX,message):
 		await undeafen(client,message,argumentOrg[1:])
 	elif argumentlow[0] == ("preventafk"):
 		await preventAFK(message,PREVENTAFKKICK)
+	elif argumentlow[0] == ('remove'):
+    	await removeItemFormPlaylist(client,message,argumentOrg[1:])
+	
 
 
 
